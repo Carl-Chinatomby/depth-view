@@ -1,0 +1,3 @@
+name: small
+model_id: depth-anything/Depth-Anything-V2-Small-hf
+device: cpu

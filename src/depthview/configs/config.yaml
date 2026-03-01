@@ -1,0 +1,10 @@
+defaults:
+  - model: small
+  - serving: gradio
+  - _self_
+
+visualization:
+  colormap: turbo
+  max_points: 15000
+  point_size: 2.0
+  default_fov: 60.0

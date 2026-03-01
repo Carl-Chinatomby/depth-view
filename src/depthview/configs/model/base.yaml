@@ -1,0 +1,3 @@
+name: base
+model_id: depth-anything/Depth-Anything-V2-Base-hf
+device: cpu
