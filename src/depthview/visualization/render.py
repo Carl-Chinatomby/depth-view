@@ -5,7 +5,7 @@ from __future__ import annotations
 import matplotlib
 import numpy as np
 import plotly.graph_objects as go
-from PIL import Image
+from PIL import Image, ImageFilter
 
 matplotlib.use("Agg")
 from matplotlib import colormaps  # noqa: E402
@@ -32,7 +32,11 @@ def create_depth_colormap(
     cmap = colormaps[colormap]
     colored = cmap(depth)  # (H, W, 4) RGBA float in [0, 1]
     colored_rgb = (colored[:, :, :3] * 255).astype(np.uint8)
-    return Image.fromarray(colored_rgb)
+    img = Image.fromarray(colored_rgb)
+
+    # Smooth out interpolation artifacts from depth upscaling
+    img = img.filter(ImageFilter.GaussianBlur(radius=2))
+    return img
 
 
 def create_3d_plot(
