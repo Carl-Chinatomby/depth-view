@@ -42,7 +42,7 @@ def create_depth_colormap(
 def create_3d_plot(
     points: np.ndarray,
     colors: np.ndarray,
-    point_size: float = 2.0,
+    point_size: float = 1.5,
 ) -> go.Figure:
     """Create an interactive 3D scatter plot from a point cloud.
 
@@ -54,8 +54,8 @@ def create_3d_plot(
     Returns:
         Plotly Figure with the 3D point cloud.
     """
-    # Convert colors to hex strings for Plotly
-    color_hex = [f"rgb({int(r * 255)},{int(g * 255)},{int(b * 255)})" for r, g, b in colors]
+    # Convert colors to rgb strings for Plotly
+    color_rgb = [f"rgb({int(r * 255)},{int(g * 255)},{int(b * 255)})" for r, g, b in colors]
 
     fig = go.Figure(
         data=[
@@ -66,12 +66,18 @@ def create_3d_plot(
                 mode="markers",
                 marker=dict(
                     size=point_size,
-                    color=color_hex,
-                    opacity=0.8,
+                    color=color_rgb,
+                    opacity=1.0,
                 ),
                 hoverinfo="skip",
             )
         ]
+    )
+
+    # Set camera to a slight overhead angle looking down at the scene
+    camera = dict(
+        eye=dict(x=0, y=-0.5, z=-1.8),
+        up=dict(x=0, y=-1, z=0),
     )
 
     fig.update_layout(
@@ -81,11 +87,12 @@ def create_3d_plot(
             zaxis=dict(visible=False),
             bgcolor="rgb(20, 20, 20)",
             aspectmode="data",
+            camera=camera,
         ),
         paper_bgcolor="rgb(20, 20, 20)",
         margin=dict(l=0, r=0, t=0, b=0),
-        width=600,
-        height=500,
+        width=700,
+        height=550,
     )
 
     return fig

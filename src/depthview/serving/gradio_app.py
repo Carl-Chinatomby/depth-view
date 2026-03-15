@@ -13,7 +13,7 @@ from depthview.visualization.render import create_3d_plot, create_depth_colormap
 _estimator: DepthEstimator | None = None
 
 
-def get_estimator(model_id: str = "depth-anything/Depth-Anything-V2-Small-hf") -> DepthEstimator:
+def get_estimator(model_id: str = "depth-anything/Depth-Anything-V2-Base-hf") -> DepthEstimator:
     global _estimator
     if _estimator is None:
         _estimator = DepthEstimator(model_name=model_id)
@@ -68,7 +68,7 @@ def build_interface():
                     minimum=20, maximum=140, value=60, step=5, label="Field of View (degrees)"
                 )
                 points_slider = gr.Slider(
-                    minimum=1000, maximum=50000, value=15000, step=1000, label="Max Points"
+                    minimum=5000, maximum=100000, value=50000, step=5000, label="Max Points"
                 )
                 colormap_dropdown = gr.Dropdown(
                     choices=["turbo", "viridis", "plasma", "inferno", "magma"],
