@@ -1,3 +1,14 @@
+---
+title: depth-view
+emoji: 🏔
+colorFrom: blue
+colorTo: purple
+sdk: gradio
+sdk_version: 4.44.1
+app_file: app.py
+pinned: false
+---
+
 # depth-view
 
 Upload a photo, get an interactive 3D point cloud. Uses monocular depth estimation to infer depth from a single image, then projects pixels into 3D space with synthetic camera intrinsics.
