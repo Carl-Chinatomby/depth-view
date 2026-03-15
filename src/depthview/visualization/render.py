@@ -24,6 +24,11 @@ def create_depth_colormap(
     Returns:
         PIL Image with the colormap applied.
     """
+    # Re-normalize to ensure full [0, 1] range for colormap contrast
+    d_min, d_max = depth.min(), depth.max()
+    if d_max - d_min > 0:
+        depth = (depth - d_min) / (d_max - d_min)
+
     cmap = colormaps[colormap]
     colored = cmap(depth)  # (H, W, 4) RGBA float in [0, 1]
     colored_rgb = (colored[:, :, :3] * 255).astype(np.uint8)
