@@ -39,7 +39,10 @@ def process_image(
     estimator = get_estimator()
     depth = estimator.estimate(image)
 
+    print(f"[DEBUG] depth shape={depth.shape} dtype={depth.dtype} min={depth.min():.4f} max={depth.max():.4f}")
+
     depth_img = create_depth_colormap(depth, colormap=colormap)
+    print(f"[DEBUG] depth_img size={depth_img.size} mode={depth_img.mode}")
 
     rgb = np.array(image.convert("RGB"))
     points, colors = depth_to_pointcloud(depth, rgb, fov_deg=fov_deg)
