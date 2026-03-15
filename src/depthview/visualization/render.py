@@ -74,9 +74,9 @@ def create_3d_plot(
         ]
     )
 
-    # Set camera to a slight overhead angle looking down at the scene
+    # Set camera looking at the scene from the front at a slight downward angle
     camera = dict(
-        eye=dict(x=0, y=-0.5, z=-1.8),
+        eye=dict(x=0, y=0.3, z=-2.0),
         up=dict(x=0, y=-1, z=0),
     )
 
