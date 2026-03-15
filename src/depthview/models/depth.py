@@ -7,7 +7,7 @@ import logging
 import numpy as np
 import torch
 from PIL import Image
-from transformers import DPTForDepthEstimation, DPTImageProcessor
+from transformers import AutoImageProcessor, AutoModelForDepthEstimation
 
 logger = logging.getLogger(__name__)
 
@@ -24,32 +24,30 @@ class DepthEstimator:
     def __init__(self, model_name: str = DEFAULT_MODEL, device: str = "cpu") -> None:
         self.model_name = model_name
         self.device = device
-        self._model: DPTForDepthEstimation | None = None
-        self._processor: DPTImageProcessor | None = None
+        self._model = None
+        self._processor = None
 
     def load_model(self) -> None:
         """Load the depth estimation model and processor."""
         if self._model is not None:
             return
         logger.info("Loading depth model: %s", self.model_name)
-        self._processor = DPTImageProcessor.from_pretrained(self.model_name)
-        self._model = DPTForDepthEstimation.from_pretrained(self.model_name)
+        self._processor = AutoImageProcessor.from_pretrained(self.model_name)
+        self._model = AutoModelForDepthEstimation.from_pretrained(self.model_name)
         self._model.to(self.device)
         self._model.eval()
         logger.info("Depth model loaded on %s", self.device)
 
     @property
-    def processor(self) -> DPTImageProcessor:
+    def processor(self):
         if self._processor is None:
             self.load_model()
-        assert self._processor is not None
         return self._processor
 
     @property
-    def model(self) -> DPTForDepthEstimation:
+    def model(self):
         if self._model is None:
             self.load_model()
-        assert self._model is not None
         return self._model
 
     def estimate(self, image: Image.Image) -> np.ndarray:
